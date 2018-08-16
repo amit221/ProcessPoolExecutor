@@ -1,26 +1,37 @@
 import { cpus } from "os";
 import { exec } from "child_process";
 
+type IResolveFn = (buffer: IBufferOutput) => void;
+type IRejectFn = (err: Error) => void;
+
+interface IBufferOutput {
+    stdout: string;
+    stderr: string;
+}
+
+interface IDeferedCmd {
+  cmd: string,
+  name: string,
+  resolveFn: any,
+  rejectFn: any,
+}
+
 export class ProcessPoolExecutor {
   private static cpuCounts = cpus().length;
-  private static deferedCmds: {
-    cmd: string,
-    resolveFn: any,
-    rejectFn: any,
-  }[] = [];
+  private static deferedCmds: IDeferedCmd[] = [];
   private static usedCpus = 0;
 
-  static execute = async (cmd: string, resolveCb?, rejectCb?) =>
-    new Promise((...args) => {
-      let resolve;
-      let reject;
+  static execute = async (cmd: string, name: string, resolveCb?: IResolveFn, rejectCb?: IRejectFn) =>
+    new Promise((resolveArg, rejectArg) => {
+      let resolve: IResolveFn;
+      let reject: IRejectFn;
 
       if (resolveCb && rejectCb) {
         resolve = resolveCb;
         reject = rejectCb;
       } else {
-        resolve = args[0];
-        reject = args[1];
+        resolve = resolveArg;
+        reject = rejectArg;
       }
 
       if (ProcessPoolExecutor.usedCpus < ProcessPoolExecutor.cpuCounts) {
@@ -41,6 +52,7 @@ export class ProcessPoolExecutor {
             ProcessPoolExecutor.deferedCmds = rest.slice();
             ProcessPoolExecutor.execute(
               firstDeferedCmd.cmd,
+              firstDeferedCmd.name,
               firstDeferedCmd.resolveFn,
               firstDeferedCmd.rejectFn,
             );
@@ -49,6 +61,7 @@ export class ProcessPoolExecutor {
       } else {
         ProcessPoolExecutor.deferedCmds.push({
           cmd,
+          name,
           resolveFn: resolve,
           rejectFn: reject,
         });

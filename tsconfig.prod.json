@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "outDir": "dist/production",
+        "module": "commonjs",
+        "inlineSourceMap": false,
+        "noUnusedLocals": true,
+        "lib": [
+            "dom",
+            "scripthost",
+            "es5",
+            "es2015.promise"
+        ],
+    },
+    "include": [
+        "src",
+    ]
+}

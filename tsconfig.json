@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "outDir": "dist/development",
+        "module": "commonjs",
+        "inlineSourceMap": true,
+        "noUnusedLocals": true,
+        "strict": true,
+        "lib": [
+            "dom",
+            "scripthost",
+            "es5",
+            "es2015.promise"
+        ],
+    },
+    "include": [
+        "src", "process-pool-executor.d.ts",
+    ]
+}

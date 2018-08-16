@@ -1,0 +1,25 @@
+{
+  "name": "process-pool-executor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:watch": "tsc -p tsconfig.json --w",
+    "build": "tsc -p tsconfig.prod.json",
+    "prepublish": "tsc -p tsconfig.json && tsc -p tsconfig.prod.json"
+  },
+  "files": [
+    "dist/",
+    "index.js",
+    "process-pool-executor.d.ts"
+  ],
+  "typings": "process-pool-executor.d.ts",
+  "dependencies": {},
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "10.5.2",
+    "tslint": "5.11.0",
+    "typescript": "2.9.2"
+  }
+}
