@@ -1,6 +1,6 @@
 {
   "name": "process-pool-executor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Process Pool Executor that schedule asynchronous executions by the number of CPUs for performance optimizations",
   "main": "index.js",
   "scripts": {
