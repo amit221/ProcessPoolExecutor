@@ -1,12 +1,13 @@
 {
   "name": "process-pool-executor",
   "version": "1.0.0",
-  "description": "",
+  "description": "Process Pool Executor that schedule asynchronous executions by the number of CPUs for performance optimizations",
   "main": "index.js",
   "scripts": {
     "build:watch": "tsc -p tsconfig.json --w",
     "build": "tsc -p tsconfig.prod.json",
-    "prepublish": "tsc -p tsconfig.json && tsc -p tsconfig.prod.json"
+    "prepublish": "tsc -p tsconfig.json && tsc -p tsconfig.prod.json",
+    "prove:me": "node ./proveme-examples/prove-me.js"
   },
   "files": [
     "dist/",
@@ -15,10 +16,12 @@
   ],
   "typings": "process-pool-executor.d.ts",
   "dependencies": {},
-  "author": "",
-  "license": "ISC",
+  "author": "Islam Attrash <isattrash@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "10.5.2",
+    "args": "5.0.0",
+    "images": "3.0.1",
     "tslint": "5.11.0",
     "typescript": "2.9.2"
   }

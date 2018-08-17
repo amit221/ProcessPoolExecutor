@@ -5,6 +5,7 @@
         "module": "commonjs",
         "inlineSourceMap": false,
         "noUnusedLocals": true,
+        "strict": true,
         "lib": [
             "dom",
             "scripthost",

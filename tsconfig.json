@@ -14,6 +14,6 @@
         ],
     },
     "include": [
-        "src", "process-pool-executor.d.ts",
+        "src",
     ]
 }
