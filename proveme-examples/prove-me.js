@@ -22,32 +22,29 @@ const regularUsage = () => {
         const imgAbsoluteFileName = `${imagesDirFullPath}/${img}`;
         const original = images(imgAbsoluteFileName);
         original
-        .draw(
-            images(coverAbsoluteFilePath)
-            .size(original.width(), original.height()), 0, 0
-        )
+            .draw(
+                images(coverAbsoluteFilePath)
+                    .size(original.width(), original.height()), 0, 0
+            );
     }
 
     const end = new Date().getTime();
     console.log(`Finished WITHOUT process-pool-executor in ${(end - start) / 1000} seconds`);
-}
+};
 
 const processPoolExectorUsage = () => {
     const start = new Date().getTime();
     console.log("Starting WITH process-pool-executor");
-    const promises = imagesFiles
-        .map(img => `${imagesDirFullPath}/${img}`)
-        .map(img => new Promise((resolveArg, rejectArg) => {
-            ProcessPoolExecutor.execute(
-                `node ${resolve(__dirname, "./external-script.js")} --image="${img}" --cover="${coverAbsoluteFilePath}"`
-            ).then(resolveArg, rejectArg);
-        }));
+    const promises = imagesFiles.map(img => {
+        return ProcessPoolExecutor.execute(`node ${resolve(__dirname, "./external-script.js")} --image="${imagesDirFullPath}/${img}" --cover="${coverAbsoluteFilePath}"`);
+    });
+
     Promise.all(promises).then(() => {
         const end = new Date().getTime();
         console.log(`Finished WITH process-pool-executor in ${(end - start) / 1000} seconds`);
     });
-}
+};
 
-regularUsage();
+//regularUsage();
 console.log("==========================");
 processPoolExectorUsage();

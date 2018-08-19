@@ -37,6 +37,8 @@ export class ProcessPoolExecutor {
     private static usedCpus = 0;
 
     private static nextCmd = () => {
+        console.log(ProcessPoolExecutor.usedCpus,ProcessPoolExecutor.deferedCmds.length);
+        ProcessPoolExecutor.usedCpus--;
         if (ProcessPoolExecutor.deferedCmds.length > 0) {
             const firstDeferedCmd = ProcessPoolExecutor.deferedCmds.pop();
             ProcessPoolExecutor[firstDeferedCmd.type](firstDeferedCmd);
@@ -48,13 +50,11 @@ export class ProcessPoolExecutor {
         if (ProcessPoolExecutor.usedCpus < ProcessPoolExecutor.cpuCounts) {
             ProcessPoolExecutor.usedCpus++;
             try {
-                const results = await exec(cmd);
-                ProcessPoolExecutor.usedCpus--;
+                const results = await execPromise(cmd);
                 ProcessPoolExecutor.nextCmd();
                 return results;
             }
             catch (err) {
-                ProcessPoolExecutor.usedCpus--;
                 ProcessPoolExecutor.nextCmd();
                 throw err;
             }
